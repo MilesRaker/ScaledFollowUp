@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Miles Raker - Scaled Composites Interview Followup</title>
+</head>
+<body>
+<!-- equations for projectile motion -->
+<!-- v = v0 + at -->
+<!-- deltaZ = ((vf - v0)/2)*t-->
+<!-- x = x0 + v0t + 1/2at^2 -->
+<!-- deltaZ = v0t + 1/2at^2 -->
+
+<h1>Problem Statement: </h1>
+<p>An aircraft is flying horizontally at 100 mph when it powers down its' engines and performs an *ideal* pitch up maneuver, instantly transferring all forward momentum to the +Z direction. What delta-Z will occur between engine cutoff and apogee?</p>
+
+<h2>Solution: </h2>
+<br>
+<h4>Assuming:</h4>
+<ul>
+    <li> Gravity is the only force acting on the aircraft</li>
+    <li> Constant gravity of 9.86 m/s^2</li>
+    <li> v = v0 + at </li>
+    <li> delta-z = ((v + v0)/2) * t</li>
+</ul>
+<br>
+<br>
+
+<h4> Step 1: calculate time to apogee</h4>
+<br>
+<p> when does v0 - at = 0?</p>
+<p> t = v0/a </p>
+<p> t = 100mph/9.86m/s</p>
+<p> convert mph -> m/s :</p>
+<p> 1 miles = 1609 meters</p>
+<p> 1 hour = 3600 seconds</p>
+<p> 1 mph = 1609/3600 m/s = 0.447 m/s</p>
+<p> v0 = 100 mph * 0.447 = 44.7 m/s</p>
+<p> solve for t</p>
+<p> t = 44.7 m/s / 9.86m/s^2</p>
+<p> t = 4.53s </p>
+
+<br>
+<br>
+
+<h4> Step 2: calculate delta-Z</h4>
+<br>
+<p> v0 = 44.7 m/s </p>
+<p> vfinal = 0m/s</p>
+<p> t = 4.53s </p>
+<p> delta-Z = ((44.7m/s)/2) * 4.53s</p>
+<p> delta-Z = 101m = 331.</p>
+<br>
+<br>
+
+<h2> Delta-Z Calculator: </h2>
+<br>
+<label for="v0">Initial velocity in miles per hour:</label>
+<input type="number" id="v0"  placeholder="v0" />
+<p> (enter velocity and hit enter/return)</p>
+<br>
+<h6>Time to Apogee in seconds: </h6>
+<p id="t"></p>
+<br>
+<h6>Delta-Z in feet: </h6>
+<p id="deltaZ"></p>
+
+<script lang="javascript">
+/* get elements */
+let v0 = document.getElementById("v0");
+let t = document.getElementById("t");
+let Z = document.getElementById("deltaZ");
+
+/* functions */
+    function convertMphToMs(v0){
+        return v0 * 0.447;
+    }
+    function calculateDeltaT(v0){
+        return v0/9.86;
+    }
+    function calculateDeltaZ(v0, t){
+        return v0/2 * t
+    }
+    function convertMetersToFeet(deltaZ){
+        /* TODO: create conversion math */
+        return deltaZ * 3.28;
+    }
+    function processData(){
+    let v0ms = convertMphToMs(v0.value).toPrecision(3);
+    let deltaT = calculateDeltaT(v0ms).toPrecision(3);
+    let deltaZ = calculateDeltaZ(v0ms, deltaT).toPrecision(3);
+    let deltaZFeet = convertMetersToFeet(deltaZ).toPrecision(3);
+    t.innerHTML = deltaT;
+    Z.innerHTML = deltaZFeet;
+}
+
+    v0.addEventListener("DOMContentLoaded", processData)
+    /* event listener */
+    v0.addEventListener("change", processData);
+
+</script>
+
+</body>
+</html>
